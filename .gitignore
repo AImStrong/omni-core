@@ -1,0 +1,19 @@
+.env
+
+.DS_Store
+#Buidler files
+cache/
+artifacts/
+node_modules/
+dist/
+build/
+.vscode
+.openzeppelin
+node_modules
+.env
+typechain
+typechain-types
+
+# Hardhat files
+cache
+artifacts
