@@ -24,3 +24,4 @@ main()
 // npx hardhat run scripts/lending/01-pool-scripts/update-pool-impl.ts --network bsc_testnet
 // npx hardhat run scripts/lending/01-pool-scripts/update-pool-impl.ts --network base_mainnet
 // npx hardhat run scripts/lending/01-pool-scripts/update-pool-impl.ts --network arbitrum_one_mainnet
+// npx hardhat run scripts/lending/01-pool-scripts/update-pool-impl.ts --network bsc_mainnet

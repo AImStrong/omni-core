@@ -40,7 +40,7 @@ contract Pool is VersionedInitializable, IPool, PoolStorage {
     using ReserveLogic for DataTypes.ReserveData;
     using WadRayMath for uint256;
 
-    uint256 public constant POOL_REVISION = 0x26;
+    uint256 public constant POOL_REVISION = 0x27;
 
     modifier whenNotPaused() {
         _whenNotPaused();

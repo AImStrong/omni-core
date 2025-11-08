@@ -5,25 +5,25 @@ dotenv.config();
 
 const config = {
     user: '0x86A36A5baAa5C60036e758CAa1a4dAd32E6a5af4',
-    asset: '0x4200000000000000000000000000000000000006',
+    asset: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
 }
 
 async function main() {
     let networkName = network.name;
 
     const pool = await ethers.getContractAt("Pool", process.env[`${networkName.toUpperCase()}_POOL_PROXY`]!);
-    const reserve = await pool.getReserveData(config.asset);
-    const tToken = await ethers.getContractAt("BEP20", reserve.tTokenAddress);
-    const debtToken = await ethers.getContractAt("BEP20", reserve.variableDebtTokenAddress);
+    // const reserve = await pool.getReserveData(config.asset);
+    // const tToken = await ethers.getContractAt("BEP20", reserve.tTokenAddress);
+    // const debtToken = await ethers.getContractAt("BEP20", reserve.variableDebtTokenAddress);
     
     console.log(`user ${config.user} underlying balance: `, await getBalance(config.asset, config.user));
     
     console.log(`user ${config.user} tToken: `, await getTTokenBalance(pool.address, config.asset, config.user));
-    console.log(`user ${config.user} scaled tToken: `, await getScaledBalance(reserve.tTokenAddress, config.user));
+    // console.log(`user ${config.user} scaled tToken: `, await getScaledBalance(reserve.tTokenAddress, config.user));
     // console.log(`total supply: `, await tToken.totalSupply());
     
     console.log(`user ${config.user} debtToken: `, await getDebtTokenBalance(pool.address, config.asset, config.user));
-    console.log(`user ${config.user} scaled debtToken: `, await getScaledBalance(reserve.variableDebtTokenAddress, config.user));
+    // console.log(`user ${config.user} scaled debtToken: `, await getScaledBalance(reserve.variableDebtTokenAddress, config.user));
     // console.log(`total borrow: `, await debtToken.totalSupply());
 }
 

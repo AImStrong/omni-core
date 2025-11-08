@@ -1,5 +1,6 @@
 import { ethers, network } from 'hardhat';
 import { Signer, BigNumber } from 'ethers';
+import { ReserveAssets } from '../../../../config/reserveAssets';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,7 +13,7 @@ async function repay(poolAddress: string, reserveAddress: string, account: Signe
         const gateway = await ethers.getContractAt('WETHGateway', process.env[`${networkName.toUpperCase()}_WETH_GATEWAY`]!);
 
         const pool = await ethers.getContractAt("Pool", process.env[`${networkName.toUpperCase()}_POOL_PROXY`]!);
-        const reserve = await pool.getReserveData(process.env[`${networkName.toUpperCase()}_WETH`]!);
+        const reserve = await pool.getReserveData(((ReserveAssets as any)[networkName]['WETH'] as any).underlyingAddress);
 
         const BEP20 = await ethers.getContractAt('BEP20', reserve.variableDebtTokenAddress);
         let amountToRepay = await BEP20.balanceOf(accountAddress);

@@ -14,7 +14,7 @@ async function main() {
     const controller = await ethers.getContractAt(`CrossChainLendingController`, process.env[`${networkName.toUpperCase()}_CONTROLLER_PROXY`]!);
     console.log('current controller revision: ', await controller.CONTROLLER_REVISION());
 
-    // await updateControllerImpl(config.newControllerImpl);
+    await updateControllerImpl(config.newControllerImpl);
 
     console.log('new controller revision: ', await controller.CONTROLLER_REVISION());
 }

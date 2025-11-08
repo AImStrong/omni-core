@@ -57,7 +57,7 @@ const config: HardhatUserConfig = {
 			accounts: [PRIVATE_KEY],
 		},
 		base_mainnet: {
-			url: "https://base.llamarpc.com",
+			url: "https://base-mainnet.public.blastapi.io",
 			chainId: 8453,
 			// gasPrice: 1e8,
 			gas: 5e6,
@@ -71,7 +71,7 @@ const config: HardhatUserConfig = {
 			accounts: [PRIVATE_KEY],
 		},
 		bsc_mainnet: {
-			url: "https://binance-smart-chain-public.nodies.app",
+			url: "https://public-bsc.nownodes.io",
 			chainId: 56,
 			// gasPrice: 1e8,
 			gas: 5e6,

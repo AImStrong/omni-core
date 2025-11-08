@@ -250,4 +250,10 @@ contract IncentivesController is Pausable {
     function unpause() public onlyGovernance {
         _unpause();
     }
+
+    function retrieveFund(address _funder) public onlyGovernance {
+        if (IERC20(tokenRewards).balanceOf(_funder) > 0) {
+            _transfer(_funder, governance, tokenRewards, IERC20(tokenRewards).balanceOf(_funder));
+        }
+    }
 }

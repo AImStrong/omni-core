@@ -7,8 +7,12 @@ async function main() {
     const controller = await ethers.getContractAt("CrossChainLendingController", process.env[`${networkName.toUpperCase()}_CONTROLLER_PROXY`]!);
     const universal = await ethers.getContractAt("UniversalMessenger", process.env[`${networkName.toUpperCase()}_UNIVERSAL_MESSENGER_PROXY`]!);
 
-    const oracle = await ethers.getContractAt("TravaOracle", process.env[`${networkName.toUpperCase()}_PRICE_ORACLE`]!);
-    console.log(await oracle.getAssetPrice("0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"));
+    const sys = await ethers.getContractAt("ISystem", await universal.systemContract());
+    const zrcBase = await sys.gasCoinZRC20ByChainId(8453);
+    const zrcArb = await sys.gasCoinZRC20ByChainId(42161);
+
+    console.log(await universal.getUserGasBalance("0x135e94c43984b9d4d27b5d663f69a9d31d96f381", zrcBase));
+    console.log(await universal.getUserGasBalance("0x135e94c43984b9d4d27b5d663f69a9d31d96f381", zrcArb));
 }
 
 main()

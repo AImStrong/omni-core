@@ -1,15 +1,24 @@
 import { ethers, network } from 'hardhat';
-import { encode } from "../../utils";
+import { encode, transfer } from "../../utils";
 import * as dotenv from "dotenv";
 dotenv.config();
 
+const config = {
+    asset: "0x4200000000000000000000000000000000000006",
+    to: "0x239b8ecc620B0DFa2340B7fb10D4feE793EF983c",
+    user: "0x239b8ecc620B0DFa2340B7fb10D4feE793EF983c",
+}
+
 async function main() {
 
-    const provider = await ethers.getContractAt(
-        "contracts/lending-protocol/factory/AddressesProvider.sol:AddressesProvider", 
-        process.env[`${network.name.toUpperCase()}_ADDRESSES_PROVIDER_PROXY`]!
-    );
-    console.log(await provider.getGovernance());
+    const system = await ethers.getContractAt("ISystem", "0x91d18e54DAf4F677cB28167158d6dd21F6aB3921");
+    const universal = await ethers.getContractAt("UniversalMessenger", "0x18351419aE86F3DD3128943ec01b873b4f35801D");
+
+    const gasAddress = await system.gasCoinZRC20ByChainId(56);
+    console.log(gasAddress);
+
+    const balance = await universal.getUserGasBalance(config.user, gasAddress);
+    console.log(balance);
 }
 
 main()

@@ -1,13 +1,11 @@
 import { ethers, network } from 'hardhat';
 import { writeToEnvFile } from '../../../utils/helper';
-import { execute } from '../../../utils/multisig';
 import { encode } from '../../../utils/encode';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
 async function setPoolImpl(newAddress: string | undefined | null) {
     let networkName = network.name;
-    const multiSigWallet = await ethers.getContractAt(`MultiSigWallet`, process.env[`${networkName.toUpperCase()}_MULTISIG_WALLET`]!);
     const addressesProvider = await ethers.getContractAt(`contracts/lending-protocol/factory/AddressesProvider.sol:AddressesProvider`, process.env[`${networkName.toUpperCase()}_ADDRESSES_PROVIDER_PROXY`]!);
 
     // ========= setPoolImpl =========
@@ -20,7 +18,6 @@ async function setPoolImpl(newAddress: string | undefined | null) {
                 BorrowLogic:      process.env[`${networkName.toUpperCase()}_BORROW_LOGIC`]!,
                 LiquidationLogic: process.env[`${networkName.toUpperCase()}_LIQUIDATION_LOGIC`]!,
                 PoolLogic:        process.env[`${networkName.toUpperCase()}_POOL_LOGIC`]!,
-                // MoveAssetsLogic:  process.env[`${networkName.toUpperCase()}_MOVE_ASSETS_LOGIC`]!
             }
         });
         const lendingPoolLogic = await LendingPoolLogic.deploy();
@@ -34,14 +31,12 @@ async function setPoolImpl(newAddress: string | undefined | null) {
 
     const dataSetId = encode("setPoolImpl(address)", [newAddress]);
     console.log(dataSetId);
-    // await execute(multiSigWallet.address, addressesProvider.address, dataSetId);
 
     console.log('pool proxy: ', await addressesProvider.getPool());
 }
 
 async function setPoolConfiguratorImpl(newAddress: string | undefined | null) {
     let networkName = network.name;
-    const multiSigWallet = await ethers.getContractAt(`MultiSigWallet`, process.env[`${networkName.toUpperCase()}_MULTISIG_WALLET`]!);
     const addressesProvider = await ethers.getContractAt(`contracts/lending-protocol/factory/AddressesProvider.sol:AddressesProvider`, process.env[`${networkName.toUpperCase()}_ADDRESSES_PROVIDER_PROXY`]!);
 
     // ========= setPoolConfiguratorImpl =========
@@ -59,7 +54,6 @@ async function setPoolConfiguratorImpl(newAddress: string | undefined | null) {
     }
 
     const dataSetId = encode("setPoolConfiguratorImpl(address)", [newAddress]);
-    // await execute(multiSigWallet.address, addressesProvider.address, dataSetId);
 
     console.log(dataSetId);
     

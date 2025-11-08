@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const config = {
-    user: '0x3655ad27b6b942511e2625872eedb6d79bd3ed4c',
+    user: '0x86A36A5baAa5C60036e758CAa1a4dAd32E6a5af4',
     asset: '0x4200000000000000000000000000000000000006',
     chainId: 8453
 }

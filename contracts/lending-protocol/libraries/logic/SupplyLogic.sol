@@ -50,12 +50,18 @@ library SupplyLogic {
     event WithdrawOnCallFailed(
         address indexed reserve,
         address indexed user,
-        address indexed to,
+        address indexed to
+    );
+    event WithdrawOnCallFullDetails(
+        uint8 indexed header,
+        address indexed reserve,
+        address indexed user,
+        address to,
         uint256 amount,
         uint256 amountToWithdraw,
-        uint256 amountToWithdrawScaled,
         uint256 amountScaled,
-        uint256 underlying,
+        uint256 amountScaledChanged,
+        uint256 amountScaledMintedToTreasury,
         bool returnNative
     );
 
@@ -246,6 +252,18 @@ library SupplyLogic {
         );
 
         emit WithdrawOnCall(params.asset, params.user, params.to, params.amount, params.returnNative);
+        emit WithdrawOnCallFullDetails(
+            uint8(DataTypes.MessageHeader.UpdateStateWithdraw),
+            params.asset, 
+            params.user, 
+            params.to, 
+            params.amount, 
+            amountToWithdraw, 
+            amountScaled, 
+            delta, 
+            amountScaledMintedToTreasury, 
+            params.returnNative
+        );
     }
 
     /**
@@ -266,9 +284,6 @@ library SupplyLogic {
         address tToken = reserve.tTokenAddress;
 
         uint256 amountScaledMintedToTreasury = reserve.updateState();
-
-        uint256 amountToWithdraw = (params.isScaled) ? params.amount.rayMul(reserve.liquidityIndex) : params.amount;
-        uint256 amountScaled     = (params.isScaled) ? params.amount : params.amount.rayDiv(reserve.liquidityIndex);
 
         bytes memory failedCrossChainMsg = abi.encode(
             // user data
@@ -295,17 +310,7 @@ library SupplyLogic {
             failedCrossChainMsg
         );
 
-        emit WithdrawOnCallFailed(
-            params.asset,
-            params.user,
-            params.to,
-            params.amount,
-            amountToWithdraw,
-            params.amountToWithdrawScaled,
-            amountScaled,
-            IBEP20(params.asset).balanceOf(tToken),
-            params.returnNative
-        );
+        emit WithdrawOnCallFailed(params.asset, params.user, params.to);
     }
 
     /**

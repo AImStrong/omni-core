@@ -17,44 +17,44 @@ const config = {
 
 async function deploy() {
     let networkName = network.name;
-    const incentives = await ethers.getContractAt(`IncentivesFactory`, process.env[`${networkName.toUpperCase()}_INCENTIVES_FACTORY`]!);
+    // const incentives = await ethers.getContractAt(`IncentivesFactory`, process.env[`${networkName.toUpperCase()}_INCENTIVES_FACTORY`]!);
 
-    // const RewardImpl = await ethers.getContractFactory(`IncentivesController`);
-    // const rewardImpl = await RewardImpl.deploy("0x81ff99181d4Bdd14f64dC1a0e1A98EF81688bA0a");
-    // await rewardImpl.deployed();
-    // console.log(`${networkName.toUpperCase()}_INCENTIVES_CONTROLLER_LOGIC address: `, rewardImpl.address);
-    // writeToEnvFile(`${networkName.toUpperCase()}_INCENTIVES_CONTROLLER_LOGIC`, rewardImpl.address);
+    const RewardImpl = await ethers.getContractFactory(`IncentivesController`);
+    const rewardImpl = await RewardImpl.deploy("0x81ff99181d4Bdd14f64dC1a0e1A98EF81688bA0a");
+    await rewardImpl.deployed();
+    console.log(`${networkName.toUpperCase()}_INCENTIVES_CONTROLLER_LOGIC address: `, rewardImpl.address);
+    writeToEnvFile(`${networkName.toUpperCase()}_INCENTIVES_CONTROLLER_LOGIC`, rewardImpl.address);
 
     // let data = encode("setVaultImpl(address,address)", [config.asset, process.env[`${networkName.toUpperCase()}_INCENTIVES_CONTROLLER_LOGIC`]!]);
     // console.log(data);
 
-    const rewardAddress = await incentives.getVault(config.asset)
-    console.log("getVault: ", rewardAddress);
+    // const rewardAddress = await incentives.getVault(config.asset)
+    // console.log("getVault: ", rewardAddress);
 
-    const reward = await ethers.getContractAt(`IncentivesController`, rewardAddress);
+    // const reward = await ethers.getContractAt(`IncentivesController`, rewardAddress);
 
-    const lendingPoolAddress = process.env[`${networkName.toUpperCase()}_POOL_PROXY`]!;
+    // const lendingPoolAddress = process.env[`${networkName.toUpperCase()}_POOL_PROXY`]!;
 
-    let datae = encode("setData(address,address,uint256,address,address,uint256,uint256,uint256)", [
-        config.funder,
-        lendingPoolAddress,
-        config.lendingIndex,
-        config.tokenRewards,
-        config.tokenStaked,
-        config.rps,
-        config.start,
-        config.end
-    ]);
-    console.log(datae);
+    // let datae = encode("setData(address,address,uint256,address,address,uint256,uint256,uint256)", [
+    //     config.funder,
+    //     lendingPoolAddress,
+    //     config.lendingIndex,
+    //     config.tokenRewards,
+    //     config.tokenStaked,
+    //     config.rps,
+    //     config.start,
+    //     config.end
+    // ]);
+    // console.log(datae);
 
-    console.log("funder: ", await reward.funder());
-    console.log("lendingPool: ", await reward.lendingPool());
-    console.log("lendingIndex: ", await reward.lendingIndexAtTimeStart());
-    console.log("tokenRewards: ", await reward.tokenRewards());
-    console.log("tokenStaked: ", await reward.tokenStaked());
-    console.log("rps: ", await reward.rps());
-    console.log("start: ", await reward.stakeStart());
-    console.log("end: ", await reward.stakeEnd());
+    // console.log("funder: ", await reward.funder());
+    // console.log("lendingPool: ", await reward.lendingPool());
+    // console.log("lendingIndex: ", await reward.lendingIndexAtTimeStart());
+    // console.log("tokenRewards: ", await reward.tokenRewards());
+    // console.log("tokenStaked: ", await reward.tokenStaked());
+    // console.log("rps: ", await reward.rps());
+    // console.log("start: ", await reward.stakeStart());
+    // console.log("end: ", await reward.stakeEnd());
 }
 
 async function main() {

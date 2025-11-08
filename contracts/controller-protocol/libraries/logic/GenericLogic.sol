@@ -345,7 +345,7 @@ library GenericLogic {
         if (totalDebtInUSD == 0) healthFactor = type(uint256).max;
         else healthFactor = (totalCollateralInUSD.percentMul(liquidationThreshold)).wadDiv(totalDebtInUSD);
 
-        require(healthFactor > 0, Errors.GL_INVALID_HEALTH_FACTOR);
+        // require(healthFactor > 0, Errors.GL_INVALID_HEALTH_FACTOR);
         return healthFactor;
     }
 

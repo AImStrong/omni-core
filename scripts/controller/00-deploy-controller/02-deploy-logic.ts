@@ -12,12 +12,12 @@ async function deploy() {
     console.log("========= Deploy logic =========");
 
     // ========= GenericLogic =========
-    // const GenericLogic = await ethers.getContractFactory(path + "GenericLogic.sol:GenericLogic");
-    // const genericLogic = await GenericLogic.deploy();
-    // await genericLogic.deployed();
+    const GenericLogic = await ethers.getContractFactory(path + "GenericLogic.sol:GenericLogic");
+    const genericLogic = await GenericLogic.deploy();
+    await genericLogic.deployed();
 
-    // console.log(`${networkName.toUpperCase()}_GENERIC_LOGIC address: `, genericLogic.address);
-    // writeToEnvFile(`${networkName.toUpperCase()}_GENERIC_LOGIC`, genericLogic.address);
+    console.log(`${networkName.toUpperCase()}_GENERIC_LOGIC address: `, genericLogic.address);
+    writeToEnvFile(`${networkName.toUpperCase()}_GENERIC_LOGIC`, genericLogic.address);
 
     // ========= ValidationLogic =========
     const ValidationLogic = await ethers.getContractFactory(path + `ValidationLogic.sol:ValidationLogic`, {

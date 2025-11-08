@@ -7,8 +7,8 @@ dotenv.config();
 
 const config = {
     user: '0x86A36A5baAa5C60036e758CAa1a4dAd32E6a5af4',
-    // asset: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
-    asset: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', // for native
+    asset: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+    // asset: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', // for native
 }
 
 const UINT256_MAX = BigNumber.from("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -24,10 +24,10 @@ async function main() {
     const pool = await ethers.getContractAt("Pool", process.env[`${networkName.toUpperCase()}_POOL_PROXY`]!);
     
     // ========= loan actions =========
-    // await deposit(pool.address, config.asset, signer, ethers.utils.parseUnits('1', 6));
+    // await deposit(pool.address, config.asset, signer, ethers.utils.parseUnits('0.04', 6));
     // await withdraw(pool.address, config.asset, signer, UINT256_MAX, ethers.utils.parseEther('0.00002'));
-    await borrow(pool.address, config.asset, signer, ethers.utils.parseUnits('0.000017', 18), ethers.utils.parseEther('0.000000002'));
-    // await repay(pool.address, config.asset, signer, ethers.utils.parseUnits('0.4', 18));
+    await borrow(pool.address, config.asset, signer, ethers.utils.parseUnits('0.005', 6), ethers.utils.parseEther('0.00002'));
+    // await repay(pool.address, config.asset, signer, ethers.utils.parseUnits('0.0002', 18));
     // await repay(pool.address, config.asset, signer, UINT256_MAX);
 
     // ========= set collateral =========

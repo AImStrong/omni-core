@@ -5,7 +5,7 @@ import { BigNumber } from 'ethers';
 dotenv.config();
 
 const config = {
-    asset: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
+    asset: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
 }
 
 async function main() {
@@ -15,7 +15,7 @@ async function main() {
     const bep20 = await ethers.getContractAt("BEP20", config.asset);
 
     const data = await pool.getReserveData(config.asset);
-    // console.log(data);
+    console.log(data);
     // console.log('underlying balance: ', await bep20.balanceOf(data.tTokenAddress));
 
     // const tToken = await ethers.getContractAt("TToken", data.tTokenAddress);
@@ -31,21 +31,21 @@ async function main() {
     // console.log('dToken total scaled supply: ', await dToken.scaledTotalSupply());
     // console.log('dToken total supply: ', await dToken.totalSupply());
 
-    const {
-        decimals,
-        isActive,
-        isFrozen,
-        borrowingEnabled,
-        stableBorrowingEnabled,
-        reserveFactor,
-    } = decodeConfiguration(BigNumber.from(data.configuration.data));
+    // const {
+    //     decimals,
+    //     isActive,
+    //     isFrozen,
+    //     borrowingEnabled,
+    //     stableBorrowingEnabled,
+    //     reserveFactor,
+    // } = decodeConfiguration(BigNumber.from(data.configuration.data));
 
     // console.log("decimals: ", decimals);
     // console.log("isActive: ", isActive);
     // console.log("isFrozen: ", isFrozen);
     // console.log("borrowingEnabled: ", borrowingEnabled);
     // console.log("stableBorrowingEnabled: ", stableBorrowingEnabled);
-    console.log("reserveFactor: ", reserveFactor);
+    // console.log("reserveFactor: ", reserveFactor);
 }
 
 main()
