@@ -1,4 +1,2 @@
-# trava-protocol-v2
-
-## For developers and contributors:
-[HOW TO GIT](./how-to-git.md) 
+# omni-core
+Omni Lending using Zetachain to bridge message.
